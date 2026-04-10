@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تسجيل دخول شبكة الواي فاي</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>تسجيل دخول شبكة الواي فاي - نسخة جوال</title>
   <style>
     :root{
       --bg:#071028;
@@ -14,122 +14,92 @@
       --glass: rgba(255,255,255,0.04);
       --success:#2ecc71;
       --danger:#e74c3c;
-      --gold-glow: 0 6px 30px rgba(201,168,75,0.18);
+      --gold-glow: 0 6px 24px rgba(201,168,75,0.14);
       --fancy-line: linear-gradient(90deg, rgba(201,168,75,0.0), rgba(201,168,75,0.9), rgba(201,168,75,0.0));
+      --radius:14px;
     }
 
     *{box-sizing:border-box;font-family: "Segoe UI", Tahoma, Arial, "Noto Naskh Arabic", sans-serif}
-    html,body{height:100%;margin:0;background: radial-gradient(1200px 600px at 10% 10%, rgba(201,168,75,0.06), transparent), var(--bg); color:#e6eef8; -webkit-font-smoothing:antialiased}
-    .container{max-width:1100px;margin:40px auto;padding:28px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: 0 10px 40px rgba(2,6,23,0.6); overflow:hidden; border:1px solid rgba(255,255,255,0.03)}
-    
+    html,body{height:100%;margin:0;background: radial-gradient(900px 400px at 10% 10%, rgba(201,168,75,0.05), transparent), var(--bg); color:#e6eef8; -webkit-font-smoothing:antialiased}
+    .container{max-width:980px;margin:18px auto;padding:14px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: 0 8px 30px rgba(2,6,23,0.6); overflow:hidden; border:1px solid rgba(255,255,255,0.03)}
+
     /* Header */
-    .header{display:flex;align-items:center;gap:18px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.03)}
-    .brand{
-      display:flex;align-items:center;gap:14px;
-    }
-    .logo{
-      width:84px;height:84px;border-radius:14px;background:linear-gradient(135deg,#0b2a4a,#102b4f);display:flex;align-items:center;justify-content:center;box-shadow:var(--gold-glow);
-      border:2px solid rgba(201,168,75,0.12);
-      position:relative;overflow:hidden;
-    }
-    .logo svg{width:60px;height:60px;filter:drop-shadow(0 6px 18px rgba(201,168,75,0.12))}
-    .network-name{font-size:22px;font-weight:800;letter-spacing:0.6px;color:var(--accent-2); text-shadow: 0 6px 18px rgba(0,0,0,0.6)}
-    .network-sub{font-size:12px;color:var(--muted);margin-top:4px}
+    .header{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid rgba(255,255,255,0.03);flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#0b2a4a,#102b4f);display:flex;align-items:center;justify-content:center;box-shadow:var(--gold-glow);border:1px solid rgba(201,168,75,0.10);flex-shrink:0}
+    .logo svg{width:46px;height:46px;filter:drop-shadow(0 6px 14px rgba(201,168,75,0.10))}
+    .network-name{font-size:18px;font-weight:900;letter-spacing:0.4px;color:var(--accent-2); text-shadow: 0 6px 12px rgba(0,0,0,0.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .network-sub{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
     /* Navigation */
-    .nav{margin-left:auto;display:flex;gap:10px;align-items:center}
+    .nav{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
     .btn{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--accent-2);cursor:pointer;font-weight:700;transition:all .28s;
-      backdrop-filter: blur(6px);
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--accent-2);cursor:pointer;font-weight:800;transition:all .22s;
+      backdrop-filter: blur(6px);font-size:13px;
     }
-    .btn:hover{transform:translateY(-4px);box-shadow:var(--gold-glow);border-color:rgba(201,168,75,0.22)}
+    .btn:hover{transform:translateY(-3px);box-shadow:var(--gold-glow);border-color:rgba(201,168,75,0.22)}
     .btn.secondary{color:#cfe3ff;border-color:rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-    
+
     /* Layout */
-    .main{display:grid;grid-template-columns:1fr 420px;gap:28px;padding:28px}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); padding:26px;border-radius:14px;border:1px solid rgba(255,255,255,0.02)}
-    
-    /* Left big panel (info) */
-    .hero{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(10,20,40,0.4), rgba(10,18,34,0.2)); min-height:320px;display:flex;flex-direction:column;justify-content:center;gap:12px}
-    .hero h1{margin:0;font-size:28px;color:var(--accent);font-weight:900}
-    .hero p{margin:0;color:var(--muted);line-height:1.6}
-    .fancy-underline{
-      height:6px;border-radius:6px;background:var(--fancy-line);margin-top:12px;animation:underlineMove 3s linear infinite;
-      box-shadow:0 6px 18px rgba(201,168,75,0.06);
-    }
-    @keyframes underlineMove{
-      0%{background-position:0% 50%}
-      100%{background-position:100% 50%}
-    }
+    .main{display:grid;grid-template-columns:1fr 420px;gap:18px;padding:18px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); padding:18px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.02)}
+
+    /* Hero */
+    .hero{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(10,20,40,0.35), rgba(10,18,34,0.18)); min-height:220px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+    .hero h1{margin:0;font-size:20px;color:var(--accent);font-weight:900}
+    .hero p{margin:0;color:var(--muted);line-height:1.5;font-size:13px}
+    .fancy-underline{height:6px;border-radius:6px;background:var(--fancy-line);margin-top:10px;animation:underlineMove 3s linear infinite}
 
     /* Right panel (login) */
-    .login-box{display:flex;flex-direction:column;gap:14px;align-items:stretch}
-    label{font-weight:800;color:#dfe9ff;font-size:13px}
+    .login-box{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+    label{font-weight:900;color:#dfe9ff;font-size:13px}
     .input{
-      padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:#eaf3ff;font-weight:700;outline:none;
-      transition:all .18s;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.25)
+      padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:#eaf3ff;font-weight:800;outline:none;
+      transition:all .14s;box-shadow:inset 0 -6px 14px rgba(0,0,0,0.22);font-size:16px;
     }
-    .input:focus{transform:translateY(-3px);box-shadow:0 12px 30px rgba(2,6,23,0.6);border-color:rgba(201,168,75,0.18)}
+    .input:focus{transform:translateY(-2px);box-shadow:0 10px 22px rgba(2,6,23,0.5);border-color:rgba(201,168,75,0.16)}
     .actions{display:flex;gap:10px;align-items:center}
-    .login-btn{flex:1;padding:12px 16px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071028;font-weight:900;cursor:pointer;box-shadow:var(--gold-glow);transition:transform .25s}
-    .login-btn:hover{transform:translateY(-4px)}
+    .login-btn{flex:1;padding:14px 16px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071028;font-weight:900;cursor:pointer;box-shadow:var(--gold-glow);transition:transform .22s;font-size:16px}
+    .login-btn:hover{transform:translateY(-3px)}
     .small{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
 
     /* Message animations */
-    .msg{padding:12px 14px;border-radius:10px;font-weight:800;display:flex;align-items:center;gap:10px;justify-content:center}
+    .msg{padding:12px 14px;border-radius:10px;font-weight:900;display:flex;align-items:center;gap:10px;justify-content:center;font-size:14px}
     .msg.error{background:linear-gradient(90deg, rgba(231,76,60,0.08), rgba(231,76,60,0.02));color:var(--danger);border:1px solid rgba(231,76,60,0.12);animation:shake .8s}
     .msg.success{background:linear-gradient(90deg, rgba(46,204,113,0.06), rgba(46,204,113,0.02));color:var(--success);border:1px solid rgba(46,204,113,0.12);animation:pop .6s}
-    @keyframes shake{
-      0%{transform:translateX(0)}
-      20%{transform:translateX(-8px)}
-      40%{transform:translateX(8px)}
-      60%{transform:translateX(-6px)}
-      80%{transform:translateX(4px)}
-      100%{transform:translateX(0)}
-    }
-    @keyframes pop{
-      0%{transform:scale(.9);opacity:0}
-      60%{transform:scale(1.03);opacity:1}
-      100%{transform:scale(1)}
-    }
+    @keyframes shake{0%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}100%{transform:translateX(0)}}
+    @keyframes pop{0%{transform:scale(.95);opacity:0}60%{transform:scale(1.03);opacity:1}100%{transform:scale(1)}}
+    @keyframes underlineMove{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 
     /* Balance page */
-    .balance{display:flex;flex-direction:column;gap:16px;align-items:stretch}
-    .card{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
-    .balance-amount{font-size:44px;font-weight:900;color:var(--accent-2);letter-spacing:1px}
-    .meta{display:flex;gap:12px;color:var(--muted);font-weight:700}
+    .balance{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+    .card{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.02)}
+    .balance-amount{font-size:36px;font-weight:900;color:var(--accent-2);letter-spacing:1px}
+    .meta{display:flex;gap:8px;color:var(--muted);font-weight:800;font-size:13px}
     .progress{height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
     .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width 1.2s ease}
 
     /* Circular expiry animation */
-    .expiry-wrap{display:flex;align-items:center;gap:18px}
-    .circle{
-      width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) 0% 0%, rgba(255,255,255,0.02) 0%);display:grid;place-items:center;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.6)
-    }
-    .circle .inner{width:86px;height:86px;border-radius:50%;background:linear-gradient(180deg,#071028,#0b1a33);display:grid;place-items:center;font-weight:900;color:var(--accent-2)}
+    .expiry-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .circle{width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--accent) 0% 0%, rgba(255,255,255,0.02) 0%);display:grid;place-items:center;position:relative;box-shadow:0 8px 22px rgba(0,0,0,0.5)}
+    .circle .inner{width:78px;height:78px;border-radius:50%;background:linear-gradient(180deg,#071028,#0b1a33);display:grid;place-items:center;font-weight:900;color:var(--accent-2);font-size:14px}
     .circle.animate{animation:spinFill 4s linear forwards}
-    @keyframes spinFill{
-      0%{background:conic-gradient(var(--accent) 0% 0%, rgba(255,255,255,0.02) 0%)}
-      100%{background:conic-gradient(var(--accent) 0% 100%, rgba(255,255,255,0.02) 0%)}
-    }
+    @keyframes spinFill{0%{background:conic-gradient(var(--accent) 0% 0%, rgba(255,255,255,0.02) 0%)}100%{background:conic-gradient(var(--accent) 0% 100%, rgba(255,255,255,0.02) 0%)}}
 
     /* Confetti simple */
     .confetti{position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;overflow:hidden}
-    .confetti span{position:absolute;width:10px;height:18px;background:var(--accent);opacity:0;transform:translateY(-20px) rotate(10deg);animation:conf 1.2s ease forwards}
-    @keyframes conf{
-      0%{opacity:1;transform:translateY(-40px) rotate(0deg)}
-      100%{opacity:1;transform:translateY(220px) rotate(360deg)}
-    }
+    .confetti span{position:absolute;width:8px;height:14px;background:var(--accent);opacity:0;transform:translateY(-20px) rotate(10deg);animation:conf 1.2s ease forwards}
+    @keyframes conf{0%{opacity:1;transform:translateY(-40px) rotate(0deg)}100%{opacity:1;transform:translateY(220px) rotate(360deg)}}
 
     /* Thank you text with moving underline */
-    .thank{display:flex;flex-direction:column;gap:8px;align-items:center;padding:18px}
-    .thank h2{font-size:20px;margin:0;color:var(--accent-2);font-weight:900}
-    .thank p{color:var(--muted);margin:0}
+    .thank{display:flex;flex-direction:column;gap:8px;align-items:center;padding:12px}
+    .thank h2{font-size:18px;margin:0;color:var(--accent-2);font-weight:900}
+    .thank p{color:var(--muted);margin:0;font-size:13px}
     .moving-line{height:8px;width:80%;border-radius:8px;background:var(--fancy-line);animation:lineFlow 2.6s linear infinite}
     @keyframes lineFlow{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 
     /* Footer */
-    .footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-weight:700}
+    .footer{padding:12px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-weight:700;font-size:13px;flex-wrap:wrap;gap:8px}
     .dev{color:var(--muted);font-weight:800}
 
     /* Pages hidden */
@@ -137,21 +107,49 @@
     .page.active{display:block}
 
     /* Pricing table */
-    .pricing{display:flex;gap:12px;flex-wrap:wrap}
-    .price-card{flex:1;min-width:180px;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.02)}
-    .price-card h3{margin:0;color:var(--accent-2);font-weight:900}
-    .price-card p{color:var(--muted);margin:8px 0 0 0}
+    .pricing{display:flex;gap:10px;flex-wrap:wrap}
+    .price-card{flex:1;min-width:160px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.02)}
+    .price-card h3{margin:0;color:var(--accent-2);font-weight:900;font-size:15px}
+    .price-card p{color:var(--muted);margin:8px 0 0 0;font-size:13px}
 
     /* Support */
     .support-list{display:flex;flex-direction:column;gap:10px}
-    .support-item{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center}
-    .support-item .info{color:var(--muted);font-weight:800}
+    .support-item{padding:10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center}
+    .support-item .info{color:var(--muted);font-weight:800;font-size:13px}
 
-    /* Responsive */
+    /* Responsive adjustments for mobile-first */
     @media (max-width:980px){
-      .main{grid-template-columns:1fr; padding:18px}
-      .nav{margin-left:0}
+      .main{grid-template-columns:1fr; padding:12px;gap:12px}
+      .logo{width:56px;height:56px}
+      .network-name{font-size:16px}
+      .network-sub{display:none}
+      .nav{width:100%;justify-content:space-between}
+      .btn{flex:1;padding:10px;border-radius:12px;font-size:15px}
+      .hero{min-height:180px;padding:12px}
+      .panel{padding:14px}
+      .login-btn{font-size:17px;padding:14px}
+      .input{font-size:17px;padding:14px}
+      .balance-amount{font-size:30px}
+      .circle{width:96px;height:96px}
+      .circle .inner{width:70px;height:70px;font-size:13px}
+      .footer{font-size:12px}
     }
+
+    /* Extra small screens: make controls full width and touch-friendly */
+    @media (max-width:420px){
+      .header{padding:10px}
+      .brand{gap:10px}
+      .nav{gap:6px}
+      .btn{padding:12px;border-radius:12px;font-size:15px}
+      .actions{flex-direction:column}
+      .login-btn{width:100%}
+      .input{width:100%}
+      .price-card{min-width:100%;flex-basis:100%}
+      .support-item{flex-direction:column;align-items:flex-start;gap:8px}
+    }
+
+    /* small utility */
+    .hidden{display:none}
   </style>
 </head>
 <body>
@@ -159,7 +157,6 @@
     <header class="header">
       <div class="brand">
         <div class="logo" aria-hidden="true">
-          <!-- شعار SVG بسيط -->
           <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <linearGradient id="g" x1="0" x2="1">
@@ -173,35 +170,24 @@
             <circle cx="32" cy="36" r="3" fill="url(#g)"/>
           </svg>
         </div>
-        <div>
-          <div class="network-name">شبكة الواي فاي الفاخرة</div>
-          <div class="network-sub">اتصال سريع وآمن — استمتع بتجربة إنترنت مميزة</div>
+        <div style="min-width:0">
+          <div class="network-name" title="شبكة الواي فاي الفاخرة">شبكة الواي فاي الفاخرة</div>
+          <div class="network-sub">اتصال سريع وآمن — تجربة مميزة</div>
         </div>
       </div>
 
       <nav class="nav" aria-label="روابط">
         <button class="btn" data-target="loginPage">تسجيل دخول</button>
-        <button class="btn secondary" data-target="pricingPage">أسعار الكروت</button>
-        <button class="btn secondary" data-target="supportPage">الدعم الفني</button>
+        <button class="btn secondary" data-target="pricingPage">أسعار</button>
+        <button class="btn secondary" data-target="supportPage">الدعم</button>
       </nav>
     </header>
 
     <main class="main">
-      <section class="panel hero">
-        <h1>مرحباً بك في شبكة الواي فاي الفاخرة</h1>
-        <p>أدخل كرت الاشتراك الخاص بك في الجهة اليمنى ثم اضغط تسجيل دخول. بعد النجاح ستنتقل تلقائياً لصفحة الرصيد حيث يمكنك متابعة استهلاكك، تمديد الوقت، أو التواصل مع الدعم.</p>
+      <section class="panel hero" aria-hidden="false">
+        <h1>مرحباً بك</h1>
+        <p>أدخل رقم الكرت في الجهة اليمنى ثم اضغط تسجيل دخول. الكرت التجريبي: <strong style="color:var(--accent-2)">123456</strong></p>
         <div class="fancy-underline" aria-hidden="true"></div>
-
-        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
-          <div class="card" style="flex:1;min-width:220px">
-            <div style="font-weight:900;color:var(--accent-2)">مزايا الشبكة</div>
-            <div style="color:var(--muted);margin-top:8px">سرعات عالية؛ أمان مشفر؛ دعم فني 24/7؛ بطاقات بأسعار مرنة.</div>
-          </div>
-          <div class="card" style="width:260px">
-            <div style="font-weight:900;color:var(--accent-2)">نصيحة</div>
-            <div style="color:var(--muted);margin-top:8px">احتفظ برقم الكرت في مكان آمن. الكرت التجريبي: <strong style="color:var(--accent-2)">123456</strong></div>
-          </div>
-        </div>
       </section>
 
       <aside class="panel">
@@ -209,12 +195,12 @@
         <div id="loginPage" class="page active">
           <div class="login-box">
             <label for="cardInput">أدخل رقم الكرت</label>
-            <input id="cardInput" class="input" placeholder="مثال: 123456" aria-label="حقل إدخال الكرت" />
+            <input id="cardInput" class="input" placeholder="مثال: 123456" aria-label="حقل إدخال الكرت" inputmode="numeric" pattern="[0-9]*" />
             <div class="actions">
               <button id="loginBtn" class="login-btn" aria-live="polite">تسجيل دخول</button>
             </div>
             <div id="messageArea" aria-live="polite"></div>
-            <div class="small">يمكنك أيضاً زيارة <button class="btn secondary" data-target="pricingPage">صفحة الأسعار</button> أو <button class="btn secondary" data-target="supportPage">الدعم الفني</button></div>
+            <div class="small">تستطيع الانتقال إلى <button class="btn secondary" data-target="pricingPage">الأسعار</button> أو <button class="btn secondary" data-target="supportPage">الدعم</button></div>
           </div>
         </div>
 
@@ -222,12 +208,12 @@
         <div id="balancePage" class="page">
           <div class="balance">
             <div class="card">
-              <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
                 <div>
-                  <div style="color:var(--muted);font-weight:800">رصيدك المتبقي</div>
+                  <div style="color:var(--muted);font-weight:900;font-size:13px">رصيدك المتبقي</div>
                   <div id="balanceAmount" class="balance-amount">0 دقيقة</div>
                 </div>
-                <div style="text-align:left">
+                <div style="min-width:160px;text-align:left">
                   <div class="meta">الحالة: <span id="statusText" style="color:var(--accent-2);margin-inline-start:8px">نشط</span></div>
                   <div style="height:8px"></div>
                   <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
@@ -241,10 +227,10 @@
             </div>
 
             <div class="card expiry-wrap">
-              <div>
+              <div style="flex:1">
                 <div style="font-weight:900;color:var(--muted)">انتهاء الرصيد</div>
-                <div style="margin-top:8px;color:var(--muted)">اضغط زر انتهاء لعرض حركة الانتهاء الدائرية</div>
-                <div style="margin-top:12px;display:flex;gap:8px">
+                <div style="margin-top:8px;color:var(--muted);font-size:13px">اضغط زر انتهاء لعرض حركة الانتهاء الدائرية</div>
+                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
                   <button id="expireBtn" class="btn secondary">انتهاء الرصيد</button>
                   <button id="backToLogin" class="btn">تسجيل خروج</button>
                 </div>
@@ -339,10 +325,6 @@
     const messageArea = document.getElementById('messageArea');
     const loginBtn = document.getElementById('loginBtn');
     const cardInput = document.getElementById('cardInput');
-    const balancePage = document.getElementById('balancePage');
-    const loginPage = document.getElementById('loginPage');
-    const pricingPage = document.getElementById('pricingPage');
-    const supportPage = document.getElementById('supportPage');
     const balanceAmount = document.getElementById('balanceAmount');
     const userCard = document.getElementById('userCard');
     const expiryText = document.getElementById('expiryText');
@@ -367,25 +349,24 @@
       pages.forEach(p=>p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       // focus for accessibility
-      document.getElementById(id).querySelector('.input')?.focus();
+      setTimeout(()=>{ document.getElementById(id).querySelector('.input')?.focus(); },120);
+      // Scroll to top on mobile for better UX
+      window.scrollTo({top:0,behavior:'smooth'});
     }
 
-    // محاكاة تحقق الكرت
-    // قاعدة بسيطة: الكرت الصحيح هو 123456
     function showMessage(text,type='error'){
       messageArea.innerHTML = '';
       const div = document.createElement('div');
       div.className = 'msg ' + (type==='error' ? 'error' : 'success');
       div.textContent = text;
       messageArea.appendChild(div);
-      // إزالة الرسالة بعد 4 ثواني
       setTimeout(()=>{ if(messageArea.contains(div)) messageArea.removeChild(div); },4000);
     }
 
     function playConfetti(){
       confetti.innerHTML = '';
       const colors = ['#f2d88b','#c9a84b','#ffd27a','#e6b84a'];
-      for(let i=0;i<18;i++){
+      for(let i=0;i<16;i++){
         const s = document.createElement('span');
         s.style.left = Math.random()*100 + '%';
         s.style.background = colors[Math.floor(Math.random()*colors.length)];
@@ -393,7 +374,6 @@
         s.style.transform = 'translateY(-40px) rotate('+ (Math.random()*360) +'deg)';
         confetti.appendChild(s);
       }
-      // إزالة بعد انتهاء الحركة
       setTimeout(()=>confetti.innerHTML='',1400);
     }
 
@@ -406,68 +386,49 @@
         showMessage('الرجاء إدخال رقم الكرت', 'error');
         return;
       }
-      // تأثير تحميل بسيط
       loginBtn.disabled = true;
       loginBtn.textContent = 'جاري التحقق...';
       setTimeout(()=>{
         loginBtn.disabled = false;
         loginBtn.textContent = 'تسجيل دخول';
-        // شرط النجاح
         if(code === '123456' || code === '000000'){
-          // نجاح
           showMessage('تم تسجيل الدخول بنجاح', 'success');
-          // إعداد بيانات الرصيد (محاكاة)
           const minutes = code === '123456' ? 120 : 30;
           const expiry = new Date(Date.now() + minutes*60000);
           const expiryStr = expiry.toLocaleString('ar-EG', {hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'});
           balanceAmount.textContent = minutes + ' دقيقة';
           userCard.textContent = code;
           expiryText.textContent = expiryStr;
-          // ملء شريط التقدم بنسبة عشوائية
           const percent = Math.min(100, Math.round((minutes/240)*100));
           progressBar.style.width = percent + '%';
           statusText.textContent = 'نشط';
-          // تأثير انتقال جميل ثم عرض صفحة الرصيد
-          document.querySelector('#loginPage .panel')?.classList?.remove('active');
-          // حركة انتقال
           setTimeout(()=> {
             showPage('balancePage');
-            // confetti
             playConfetti();
-          }, 600);
+          }, 500);
         } else {
-          // فشل
           showMessage('خطأ في تسجيل الكرت أعد المحاولة', 'error');
-          // اهتزاز الحقل
           cardInput.classList.add('shake');
           setTimeout(()=>cardInput.classList.remove('shake'),800);
         }
-      },900);
+      },800);
     }
 
-    // زر انتهاء الرصيد
     expireBtn.addEventListener('click', ()=>{
-      // إظهار الحركة الدائرية وتغيير النص
       circle.classList.add('animate');
       circleInner.textContent = 'انتهاء';
-      // تشغيل حركة دائرية لمدة 4 ثواني ثم إظهار رسالة الانتهاء
       setTimeout(()=>{
         circle.classList.remove('animate');
         circleInner.textContent = '0';
-        // إظهار بلوك الشكر والنص المتحرك
         thankBlock.style.display = 'flex';
-        // تغيير الحالة
         statusText.textContent = 'منتهي';
         balanceAmount.textContent = '0 دقيقة';
         progressBar.style.width = '0%';
-        // ظهور نص من العدم مع حركة
         showMessage('انتهى رصيدك', 'error');
       },4200);
     });
 
-    // زر تسجيل خروج
     backToLogin.addEventListener('click', ()=>{
-      // إعادة تعيين الحقول
       cardInput.value = '';
       showPage('loginPage');
       messageArea.innerHTML = '';
@@ -476,22 +437,17 @@
       statusText.textContent = 'غير متصل';
     });
 
-    // روابط داخلية في الصفحة
     document.querySelectorAll('.btn.secondary[data-target]').forEach(b=>{
       b.addEventListener('click', ()=> showPage(b.getAttribute('data-target')));
     });
 
-    // تهيئة بسيطة
     document.addEventListener('DOMContentLoaded', ()=>{
-      // اجعل الحقل مركّزاً
       cardInput.focus();
-      // اضف تأثير صغير عند إدخال خاطئ
       const style = document.createElement('style');
       style.textContent = '.shake{animation:shake .8s}';
       document.head.appendChild(style);
     });
 
-    // تحسين الوصول: التنقل عبر الأزرار
     document.addEventListener('keydown', (e)=>{
       if(e.key === 'Escape') {
         showPage('loginPage');
