@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تسجيل دخول شبكة الواي فاي</title>
+  <style>
+    :root{
+      --bg:#071028;
+      --panel:#0f1b33;
+      --accent:#c9a84b;
+      --accent-2:#f2d88b;
+      --muted:#9aa6bf;
+      --glass: rgba(255,255,255,0.04);
+      --success:#2ecc71;
+      --danger:#e74c3c;
+      --gold-glow: 0 6px 30px rgba(201,168,75,0.18);
+      --fancy-line: linear-gradient(90deg, rgba(201,168,75,0.0), rgba(201,168,75,0.9), rgba(201,168,75,0.0));
+    }
+
+    *{box-sizing:border-box;font-family: "Segoe UI", Tahoma, Arial, "Noto Naskh Arabic", sans-serif}
+    html,body{height:100%;margin:0;background: radial-gradient(1200px 600px at 10% 10%, rgba(201,168,75,0.06), transparent), var(--bg); color:#e6eef8; -webkit-font-smoothing:antialiased}
+    .container{max-width:1100px;margin:40px auto;padding:28px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow: 0 10px 40px rgba(2,6,23,0.6); overflow:hidden; border:1px solid rgba(255,255,255,0.03)}
+    
+    /* Header */
+    .header{display:flex;align-items:center;gap:18px;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.03)}
+    .brand{
+      display:flex;align-items:center;gap:14px;
+    }
+    .logo{
+      width:84px;height:84px;border-radius:14px;background:linear-gradient(135deg,#0b2a4a,#102b4f);display:flex;align-items:center;justify-content:center;box-shadow:var(--gold-glow);
+      border:2px solid rgba(201,168,75,0.12);
+      position:relative;overflow:hidden;
+    }
+    .logo svg{width:60px;height:60px;filter:drop-shadow(0 6px 18px rgba(201,168,75,0.12))}
+    .network-name{font-size:22px;font-weight:800;letter-spacing:0.6px;color:var(--accent-2); text-shadow: 0 6px 18px rgba(0,0,0,0.6)}
+    .network-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+    /* Navigation */
+    .nav{margin-left:auto;display:flex;gap:10px;align-items:center}
+    .btn{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--accent-2);cursor:pointer;font-weight:700;transition:all .28s;
+      backdrop-filter: blur(6px);
+    }
+    .btn:hover{transform:translateY(-4px);box-shadow:var(--gold-glow);border-color:rgba(201,168,75,0.22)}
+    .btn.secondary{color:#cfe3ff;border-color:rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    
+    /* Layout */
+    .main{display:grid;grid-template-columns:1fr 420px;gap:28px;padding:28px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); padding:26px;border-radius:14px;border:1px solid rgba(255,255,255,0.02)}
+    
+    /* Left big panel (info) */
+    .hero{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(10,20,40,0.4), rgba(10,18,34,0.2)); min-height:320px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+    .hero h1{margin:0;font-size:28px;color:var(--accent);font-weight:900}
+    .hero p{margin:0;color:var(--muted);line-height:1.6}
+    .fancy-underline{
+      height:6px;border-radius:6px;background:var(--fancy-line);margin-top:12px;animation:underlineMove 3s linear infinite;
+      box-shadow:0 6px 18px rgba(201,168,75,0.06);
+    }
+    @keyframes underlineMove{
+      0%{background-position:0% 50%}
+      100%{background-position:100% 50%}
+    }
+
+    /* Right panel (login) */
+    .login-box{display:flex;flex-direction:column;gap:14px;align-items:stretch}
+    label{font-weight:800;color:#dfe9ff;font-size:13px}
+    .input{
+      padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:#eaf3ff;font-weight:700;outline:none;
+      transition:all .18s;box-shadow:inset 0 -6px 18px rgba(0,0,0,0.25)
+    }
+    .input:focus{transform:translateY(-3px);box-shadow:0 12px 30px rgba(2,6,23,0.6);border-color:rgba(201,168,75,0.18)}
+    .actions{display:flex;gap:10px;align-items:center}
+    .login-btn{flex:1;padding:12px 16px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#071028;font-weight:900;cursor:pointer;box-shadow:var(--gold-glow);transition:transform .25s}
+    .login-btn:hover{transform:translateY(-4px)}
+    .small{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+
+    /* Message animations */
+    .msg{padding:12px 14px;border-radius:10px;font-weight:800;display:flex;align-items:center;gap:10px;justify-content:center}
+    .msg.error{background:linear-gradient(90deg, rgba(231,76,60,0.08), rgba(231,76,60,0.02));color:var(--danger);border:1px solid rgba(231,76,60,0.12);animation:shake .8s}
+    .msg.success{background:linear-gradient(90deg, rgba(46,204,113,0.06), rgba(46,204,113,0.02));color:var(--success);border:1px solid rgba(46,204,113,0.12);animation:pop .6s}
+    @keyframes shake{
+      0%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-6px)}
+      80%{transform:translateX(4px)}
+      100%{transform:translateX(0)}
+    }
+    @keyframes pop{
+      0%{transform:scale(.9);opacity:0}
+      60%{transform:scale(1.03);opacity:1}
+      100%{transform:scale(1)}
+    }
+
+    /* Balance page */
+    .balance{display:flex;flex-direction:column;gap:16px;align-items:stretch}
+    .card{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02)}
+    .balance-amount{font-size:44px;font-weight:900;color:var(--accent-2);letter-spacing:1px}
+    .meta{display:flex;gap:12px;color:var(--muted);font-weight:700}
+    .progress{height:12px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width 1.2s ease}
+
+    /* Circular expiry animation */
+    .expiry-wrap{display:flex;align-items:center;gap:18px}
+    .circle{
+      width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--accent) 0% 0%, rgba(255,255,255,0.02) 0%);display:grid;place-items:center;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.6)
+    }
+    .circle .inner{width:86px;height:86px;border-radius:50%;background:linear-gradient(180deg,#071028,#0b1a33);display:grid;place-items:center;font-weight:900;color:var(--accent-2)}
+    .circle.animate{animation:spinFill 4s linear forwards}
+    @keyframes spinFill{
+      0%{background:conic-gradient(var(--accent) 0% 0%, rgba(255,255,255,0.02) 0%)}
+      100%{background:conic-gradient(var(--accent) 0% 100%, rgba(255,255,255,0.02) 0%)}
+    }
+
+    /* Confetti simple */
+    .confetti{position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;overflow:hidden}
+    .confetti span{position:absolute;width:10px;height:18px;background:var(--accent);opacity:0;transform:translateY(-20px) rotate(10deg);animation:conf 1.2s ease forwards}
+    @keyframes conf{
+      0%{opacity:1;transform:translateY(-40px) rotate(0deg)}
+      100%{opacity:1;transform:translateY(220px) rotate(360deg)}
+    }
+
+    /* Thank you text with moving underline */
+    .thank{display:flex;flex-direction:column;gap:8px;align-items:center;padding:18px}
+    .thank h2{font-size:20px;margin:0;color:var(--accent-2);font-weight:900}
+    .thank p{color:var(--muted);margin:0}
+    .moving-line{height:8px;width:80%;border-radius:8px;background:var(--fancy-line);animation:lineFlow 2.6s linear infinite}
+    @keyframes lineFlow{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+
+    /* Footer */
+    .footer{padding:14px 18px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-weight:700}
+    .dev{color:var(--muted);font-weight:800}
+
+    /* Pages hidden */
+    .page{display:none}
+    .page.active{display:block}
+
+    /* Pricing table */
+    .pricing{display:flex;gap:12px;flex-wrap:wrap}
+    .price-card{flex:1;min-width:180px;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(255,255,255,0.02)}
+    .price-card h3{margin:0;color:var(--accent-2);font-weight:900}
+    .price-card p{color:var(--muted);margin:8px 0 0 0}
+
+    /* Support */
+    .support-list{display:flex;flex-direction:column;gap:10px}
+    .support-item{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center}
+    .support-item .info{color:var(--muted);font-weight:800}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .main{grid-template-columns:1fr; padding:18px}
+      .nav{margin-left:0}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="application" aria-label="واجهة تسجيل الواي فاي">
+    <header class="header">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- شعار SVG بسيط -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#f2d88b"/>
+                <stop offset="1" stop-color="#c9a84b"/>
+              </linearGradient>
+            </defs>
+            <rect x="6" y="18" width="52" height="28" rx="6" fill="#071028"/>
+            <path d="M32 14c6 0 11 5 11 11" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 20c3 0 6 3 6 6" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="36" r="3" fill="url(#g)"/>
+          </svg>
+        </div>
+        <div>
+          <div class="network-name">شبكة الواي فاي الفاخرة</div>
+          <div class="network-sub">اتصال سريع وآمن — استمتع بتجربة إنترنت مميزة</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="روابط">
+        <button class="btn" data-target="loginPage">تسجيل دخول</button>
+        <button class="btn secondary" data-target="pricingPage">أسعار الكروت</button>
+        <button class="btn secondary" data-target="supportPage">الدعم الفني</button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="panel hero">
+        <h1>مرحباً بك في شبكة الواي فاي الفاخرة</h1>
+        <p>أدخل كرت الاشتراك الخاص بك في الجهة اليمنى ثم اضغط تسجيل دخول. بعد النجاح ستنتقل تلقائياً لصفحة الرصيد حيث يمكنك متابعة استهلاكك، تمديد الوقت، أو التواصل مع الدعم.</p>
+        <div class="fancy-underline" aria-hidden="true"></div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:220px">
+            <div style="font-weight:900;color:var(--accent-2)">مزايا الشبكة</div>
+            <div style="color:var(--muted);margin-top:8px">سرعات عالية؛ أمان مشفر؛ دعم فني 24/7؛ بطاقات بأسعار مرنة.</div>
+          </div>
+          <div class="card" style="width:260px">
+            <div style="font-weight:900;color:var(--accent-2)">نصيحة</div>
+            <div style="color:var(--muted);margin-top:8px">احتفظ برقم الكرت في مكان آمن. الكرت التجريبي: <strong style="color:var(--accent-2)">123456</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+          <div class="login-box">
+            <label for="cardInput">أدخل رقم الكرت</label>
+            <input id="cardInput" class="input" placeholder="مثال: 123456" aria-label="حقل إدخال الكرت" />
+            <div class="actions">
+              <button id="loginBtn" class="login-btn" aria-live="polite">تسجيل دخول</button>
+            </div>
+            <div id="messageArea" aria-live="polite"></div>
+            <div class="small">يمكنك أيضاً زيارة <button class="btn secondary" data-target="pricingPage">صفحة الأسعار</button> أو <button class="btn secondary" data-target="supportPage">الدعم الفني</button></div>
+          </div>
+        </div>
+
+        <!-- Balance Page -->
+        <div id="balancePage" class="page">
+          <div class="balance">
+            <div class="card">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                  <div style="color:var(--muted);font-weight:800">رصيدك المتبقي</div>
+                  <div id="balanceAmount" class="balance-amount">0 دقيقة</div>
+                </div>
+                <div style="text-align:left">
+                  <div class="meta">الحالة: <span id="statusText" style="color:var(--accent-2);margin-inline-start:8px">نشط</span></div>
+                  <div style="height:8px"></div>
+                  <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="meta">اسم المستخدم: <strong id="userCard" style="color:var(--accent-2);margin-inline-start:8px">-</strong></div>
+              <div class="meta">تاريخ الانتهاء المتوقع: <strong id="expiryText" style="color:var(--muted);margin-inline-start:8px">-</strong></div>
+            </div>
+
+            <div class="card expiry-wrap">
+              <div>
+                <div style="font-weight:900;color:var(--muted)">انتهاء الرصيد</div>
+                <div style="margin-top:8px;color:var(--muted)">اضغط زر انتهاء لعرض حركة الانتهاء الدائرية</div>
+                <div style="margin-top:12px;display:flex;gap:8px">
+                  <button id="expireBtn" class="btn secondary">انتهاء الرصيد</button>
+                  <button id="backToLogin" class="btn">تسجيل خروج</button>
+                </div>
+              </div>
+              <div style="position:relative">
+                <div id="circle" class="circle" aria-hidden="true">
+                  <div class="inner" id="circleInner">جاهز</div>
+                </div>
+                <div id="confetti" class="confetti" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="card thank" id="thankBlock" style="display:none">
+              <h2>انتهى رصيدك</h2>
+              <p>شكراً لك على استخدام شبكتنا نرجو أن تكون قد استمتعت</p>
+              <div class="moving-line" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Page -->
+        <div id="pricingPage" class="page">
+          <div class="card">
+            <h3 style="margin:0;color:var(--accent-2);font-weight:900">أسعار الكروت</h3>
+            <div style="height:10px"></div>
+            <div class="pricing">
+              <div class="price-card">
+                <h3>كرت تجريبي</h3>
+                <p>المدة: 30 دقيقة; السعر: مجاني; مناسب للتجربة</p>
+              </div>
+              <div class="price-card">
+                <h3>كرت يومي</h3>
+                <p>المدة: 24 ساعة; السعر: 2.50$; اتصال غير محدود خلال المدة</p>
+              </div>
+              <div class="price-card">
+                <h3>كرت أسبوعي</h3>
+                <p>المدة: 7 أيام; السعر: 12.00$; أفضل قيمة</p>
+              </div>
+              <div class="price-card">
+                <h3>كرت شهري</h3>
+                <p>المدة: 30 يوم; السعر: 35.00$; مناسب للمستخدمين الدائمين</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Page -->
+        <div id="supportPage" class="page">
+          <div class="card">
+            <h3 style="margin:0;color:var(--accent-2);font-weight:900">الدعم الفني</h3>
+            <div style="height:10px"></div>
+            <div class="support-list">
+              <div class="support-item">
+                <div>
+                  <div style="font-weight:900;color:var(--accent-2)">الدعم عبر الهاتف</div>
+                  <div class="info">+967 7X XXX XXXX</div>
+                </div>
+                <button class="btn secondary" onclick="alert('سيتم الاتصال بالدعم')">اتصال</button>
+              </div>
+
+              <div class="support-item">
+                <div>
+                  <div style="font-weight:900;color:var(--accent-2)">البريد الإلكتروني</div>
+                  <div class="info">support@luxwifi.example</div>
+                </div>
+                <button class="btn secondary" onclick="navigator.clipboard?.writeText('support@luxwifi.example')">نسخ</button>
+              </div>
+
+              <div class="support-item">
+                <div>
+                  <div style="font-weight:900;color:var(--accent-2)">مركز المساعدة</div>
+                  <div class="info">ساعات العمل 24/7</div>
+                </div>
+                <button class="btn secondary" onclick="alert('فتح مركز المساعدة')">فتح</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div>© شبكة الواي فاي الفاخرة</div>
+          <div class="dev">المطور: مازن علي بن علي الجيلاني</div>
+        </footer>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    // عناصر الصفحة
+    const pages = document.querySelectorAll('.page');
+    const navBtns = document.querySelectorAll('[data-target]');
+    const messageArea = document.getElementById('messageArea');
+    const loginBtn = document.getElementById('loginBtn');
+    const cardInput = document.getElementById('cardInput');
+    const balancePage = document.getElementById('balancePage');
+    const loginPage = document.getElementById('loginPage');
+    const pricingPage = document.getElementById('pricingPage');
+    const supportPage = document.getElementById('supportPage');
+    const balanceAmount = document.getElementById('balanceAmount');
+    const userCard = document.getElementById('userCard');
+    const expiryText = document.getElementById('expiryText');
+    const progressBar = document.getElementById('progressBar');
+    const statusText = document.getElementById('statusText');
+    const circle = document.getElementById('circle');
+    const circleInner = document.getElementById('circleInner');
+    const expireBtn = document.getElementById('expireBtn');
+    const backToLogin = document.getElementById('backToLogin');
+    const confetti = document.getElementById('confetti');
+    const thankBlock = document.getElementById('thankBlock');
+
+    // تنقل بين الصفحات
+    navBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        const target = btn.getAttribute('data-target');
+        showPage(target);
+      });
+    });
+
+    function showPage(id){
+      pages.forEach(p=>p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      // focus for accessibility
+      document.getElementById(id).querySelector('.input')?.focus();
+    }
+
+    // محاكاة تحقق الكرت
+    // قاعدة بسيطة: الكرت الصحيح هو 123456
+    function showMessage(text,type='error'){
+      messageArea.innerHTML = '';
+      const div = document.createElement('div');
+      div.className = 'msg ' + (type==='error' ? 'error' : 'success');
+      div.textContent = text;
+      messageArea.appendChild(div);
+      // إزالة الرسالة بعد 4 ثواني
+      setTimeout(()=>{ if(messageArea.contains(div)) messageArea.removeChild(div); },4000);
+    }
+
+    function playConfetti(){
+      confetti.innerHTML = '';
+      const colors = ['#f2d88b','#c9a84b','#ffd27a','#e6b84a'];
+      for(let i=0;i<18;i++){
+        const s = document.createElement('span');
+        s.style.left = Math.random()*100 + '%';
+        s.style.background = colors[Math.floor(Math.random()*colors.length)];
+        s.style.animationDelay = (Math.random()*0.2)+'s';
+        s.style.transform = 'translateY(-40px) rotate('+ (Math.random()*360) +'deg)';
+        confetti.appendChild(s);
+      }
+      // إزالة بعد انتهاء الحركة
+      setTimeout(()=>confetti.innerHTML='',1400);
+    }
+
+    loginBtn.addEventListener('click', attemptLogin);
+    cardInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') attemptLogin(); });
+
+    function attemptLogin(){
+      const code = cardInput.value.trim();
+      if(!code){
+        showMessage('الرجاء إدخال رقم الكرت', 'error');
+        return;
+      }
+      // تأثير تحميل بسيط
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'جاري التحقق...';
+      setTimeout(()=>{
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'تسجيل دخول';
+        // شرط النجاح
+        if(code === '123456' || code === '000000'){
+          // نجاح
+          showMessage('تم تسجيل الدخول بنجاح', 'success');
+          // إعداد بيانات الرصيد (محاكاة)
+          const minutes = code === '123456' ? 120 : 30;
+          const expiry = new Date(Date.now() + minutes*60000);
+          const expiryStr = expiry.toLocaleString('ar-EG', {hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'});
+          balanceAmount.textContent = minutes + ' دقيقة';
+          userCard.textContent = code;
+          expiryText.textContent = expiryStr;
+          // ملء شريط التقدم بنسبة عشوائية
+          const percent = Math.min(100, Math.round((minutes/240)*100));
+          progressBar.style.width = percent + '%';
+          statusText.textContent = 'نشط';
+          // تأثير انتقال جميل ثم عرض صفحة الرصيد
+          document.querySelector('#loginPage .panel')?.classList?.remove('active');
+          // حركة انتقال
+          setTimeout(()=> {
+            showPage('balancePage');
+            // confetti
+            playConfetti();
+          }, 600);
+        } else {
+          // فشل
+          showMessage('خطأ في تسجيل الكرت أعد المحاولة', 'error');
+          // اهتزاز الحقل
+          cardInput.classList.add('shake');
+          setTimeout(()=>cardInput.classList.remove('shake'),800);
+        }
+      },900);
+    }
+
+    // زر انتهاء الرصيد
+    expireBtn.addEventListener('click', ()=>{
+      // إظهار الحركة الدائرية وتغيير النص
+      circle.classList.add('animate');
+      circleInner.textContent = 'انتهاء';
+      // تشغيل حركة دائرية لمدة 4 ثواني ثم إظهار رسالة الانتهاء
+      setTimeout(()=>{
+        circle.classList.remove('animate');
+        circleInner.textContent = '0';
+        // إظهار بلوك الشكر والنص المتحرك
+        thankBlock.style.display = 'flex';
+        // تغيير الحالة
+        statusText.textContent = 'منتهي';
+        balanceAmount.textContent = '0 دقيقة';
+        progressBar.style.width = '0%';
+        // ظهور نص من العدم مع حركة
+        showMessage('انتهى رصيدك', 'error');
+      },4200);
+    });
+
+    // زر تسجيل خروج
+    backToLogin.addEventListener('click', ()=>{
+      // إعادة تعيين الحقول
+      cardInput.value = '';
+      showPage('loginPage');
+      messageArea.innerHTML = '';
+      thankBlock.style.display = 'none';
+      circleInner.textContent = 'جاهز';
+      statusText.textContent = 'غير متصل';
+    });
+
+    // روابط داخلية في الصفحة
+    document.querySelectorAll('.btn.secondary[data-target]').forEach(b=>{
+      b.addEventListener('click', ()=> showPage(b.getAttribute('data-target')));
+    });
+
+    // تهيئة بسيطة
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // اجعل الحقل مركّزاً
+      cardInput.focus();
+      // اضف تأثير صغير عند إدخال خاطئ
+      const style = document.createElement('style');
+      style.textContent = '.shake{animation:shake .8s}';
+      document.head.appendChild(style);
+    });
+
+    // تحسين الوصول: التنقل عبر الأزرار
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') {
+        showPage('loginPage');
+      }
+    });
+  </script>
+</body>
+</html>
